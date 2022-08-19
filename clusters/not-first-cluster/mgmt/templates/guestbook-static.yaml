@@ -1,0 +1,21 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: not-first-cluster-guestbook-static
+  namespace: argocd
+  finalizers:
+  # This solves issue #17
+  - resources-finalizer.argocd.argoproj.io/foreground
+spec:
+  syncPolicy:
+    automated:
+      prune: true
+  destination:
+    name: not-first-cluster
+    namespace: default
+  project: default
+  source:
+    repoURL: https://github.com/Rohitrajak1807/more_arlon
+    path: clusters/not-first-cluster/workload/guestbook-static
+    targetRevision: HEAD
